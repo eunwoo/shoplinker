@@ -3,6 +3,8 @@
 
 # 준비사항
 ## git 설치(https://git-scm.com/downloads/win)
+python 3.12.7에서 실행됨
+
 # 실행방법
 1. powershell 실행
 2. git clone https://github.com/eunwoo/shoplinker.git
