@@ -9,6 +9,7 @@
 3. cd shoplinker
 4. python -m venv .venv
 5. .venv/scripts/activate.ps1
-6. python -m pip install -r requirements.txt
-7. python main.py
+6. python -m pip install setuptools
+7. python -m pip install -r requirements.txt
+8. python main.py
    
