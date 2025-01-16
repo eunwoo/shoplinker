@@ -515,7 +515,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 continue
             if isinstance(self.category[k1], dict):
                 for k2, v2 in self.category[k1].items():
-                    k2_filename = re.sub('\(.*\)', '', k2) # 괄호안에 긴 숫자가 있는 것을 삭제
+                    k2_filename = re.sub(r'\(.*\)', '', k2) # 괄호안에 긴 숫자가 있는 것을 삭제
                     # with open(f"{self.lineEdit_4.text()}/data - {k1} - {k2_filename.replace('/','／')}.pickle","wb") as fw:
                     with open(f"data - {k1} - {k2_filename.replace('/','／')}.pickle","wb") as fw:
                         category = {}
@@ -579,25 +579,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     # if any([re.search(r'\b'+search_what, text) for text in k.split('>')]):
                     if any([re.search(search_what, text) for text in (upper_group_name_with_code+'>'+k).split('>')]):
                         if upper_group_name.split('>')[0] == '스마트스토어':
-                            self.listWidget_11.addItems([upper_group_name+'>'+ re.sub('\(\d+\)', '', k)])
+                            self.listWidget_11.addItems([upper_group_name+'>'+ re.sub(r'\(\d+\)', '', k)])
                             self.search_result['스마트스토어'].append(upper_group_name_with_code+'>'+k)
                         elif upper_group_name.split('>')[0] == '쿠팡':
-                            self.listWidget_12.addItems([upper_group_name+'>'+ re.sub('\(\d+\)', '', k)])
+                            self.listWidget_12.addItems([upper_group_name+'>'+ re.sub(r'\(\d+\)', '', k)])
                             self.search_result['쿠팡'].append(upper_group_name_with_code+'>'+k)
                         elif upper_group_name.split('>')[0] == '지마켓':
-                            self.listWidget_13.addItems([upper_group_name+'>'+ re.sub('\(\d+\)', '', k)])
+                            self.listWidget_13.addItems([upper_group_name+'>'+ re.sub(r'\(\d+\)', '', k)])
                             self.search_result['지마켓'].append(upper_group_name_with_code+'>'+k)
                         elif upper_group_name.split('>')[0] == '11번가':
-                            self.listWidget_10.addItems([upper_group_name+'>'+ re.sub('\(\d+\)', '', k)])
+                            self.listWidget_10.addItems([upper_group_name+'>'+ re.sub(r'\(\d+\)', '', k)])
                             self.search_result['11번가'].append(upper_group_name_with_code+'>'+k)
                         elif upper_group_name.split('>')[0] == '옥션':
-                            self.listWidget_14.addItems([upper_group_name+'>'+ re.sub('\(\d+\)', '', k)])
+                            self.listWidget_14.addItems([upper_group_name+'>'+ re.sub(r'\(\d+\)', '', k)])
                             self.search_result['옥션'].append(upper_group_name_with_code+'>'+k)
                         elif upper_group_name.split('>')[0] == '카페24':
-                            self.listWidget_15.addItems([upper_group_name+'>'+ re.sub('\(.*\)', '', k)])
+                            self.listWidget_15.addItems([upper_group_name+'>'+ re.sub(r'\(.*\)', '', k)])
                             self.search_result['카페24'].append(upper_group_name_with_code+'>'+k)
                 else:
-                    self.search_sub(dict_val[k], upper_group_name+'>'+re.sub('\(.*\)', '', k), search_what, upper_group_name_with_code+'>'+k)
+                    self.search_sub(dict_val[k], upper_group_name+'>'+re.sub(r'\(.*\)', '', k), search_what, upper_group_name_with_code+'>'+k)
 
     def search_result_selected_string_format(self, str):
         return '>'.join(str.split('>')[-2:])
@@ -725,18 +725,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if category_maker in self.category:
             items = []
             for k1, v1 in self.category[category_maker].items():
-                item = QTreeWidgetItem([re.sub('\(\d+\)','',k1)])
+                item = QTreeWidgetItem([re.sub(r'\(\d+\)','',k1)])
                 if isinstance(self.category[category_maker][k1], dict):
                     for k2, v2 in self.category[category_maker][k1].items():
-                        child = QTreeWidgetItem([re.sub('\(\d+\)','',k2)])
+                        child = QTreeWidgetItem([re.sub(r'\(\d+\)','',k2)])
                         item.addChild(child)
                         if isinstance(self.category[category_maker][k1][k2], dict):
                             for k3, v3 in self.category[category_maker][k1][k2].items():
-                                child1 = QTreeWidgetItem([re.sub('\(\d+\)','',k3)])
+                                child1 = QTreeWidgetItem([re.sub(r'\(\d+\)','',k3)])
                                 child.addChild(child1)
                                 if isinstance(self.category[category_maker][k1][k2][k3], dict):
                                     for k4, v4 in self.category[category_maker][k1][k2][k3].items():
-                                        child2 = QTreeWidgetItem([re.sub('\(\d+\)','',k4)])
+                                        child2 = QTreeWidgetItem([re.sub(r'\(\d+\)','',k4)])
                                         child1.addChild(child2)
                 items.append(item)
             self.treeWidget.insertTopLevelItems(0, items)
@@ -754,8 +754,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.comboBox_2.addItem('전체')
             for k1, v1 in self.category[category_maker].items():
                 self.listitem_to_key1.append(k1)
-                self.listWidget.addItem(re.sub('\(.*\)','',k1))
-                self.comboBox_2.addItem(re.sub('\(.*\)','',k1))
+                self.listWidget.addItem(re.sub(r'\(.*\)','',k1))
+                self.comboBox_2.addItem(re.sub(r'\(.*\)','',k1))
         else:
             self.comboBox_2.clear()
 
@@ -785,7 +785,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listitem_to_key2 = []
         for k1, v1 in self.category[category_maker][self.list_k1].items():
             self.listitem_to_key2.append(k1)
-            self.listWidget_2.addItem(re.sub('\(.*\)','',k1))
+            self.listWidget_2.addItem(re.sub(r'\(.*\)','',k1))
         
     def list_level2_click(self):
         print('list_level2_click')
@@ -802,7 +802,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listitem_to_key3 = []
         for k1, v1 in self.category[category_maker][self.list_k1][self.list_k2].items():
             self.listitem_to_key3.append(k1)
-            self.listWidget_3.addItem(re.sub('\(.*\)','',k1))
+            self.listWidget_3.addItem(re.sub(r'\(.*\)','',k1))
 
     def list_level3_click(self):
         print('list_level3_click')
@@ -817,7 +817,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listitem_to_key4 = []
         for k1, v1 in self.category[category_maker][self.list_k1][self.list_k2][self.list_k3].items():
             self.listitem_to_key4.append(k1)
-            self.listWidget_4.addItem(re.sub('\(.*\)','',k1))
+            self.listWidget_4.addItem(re.sub(r'\(.*\)','',k1))
 
     def list_level4_click(self):
         print('list_level4_click')
@@ -832,7 +832,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listitem_to_key5 = []
         for k1, v1 in self.category[category_maker][self.list_k1][self.list_k2][self.list_k3][self.list_k4].items():
             self.listitem_to_key5.append(k1)
-            self.listWidget_5.addItem(re.sub('\(.*\)','',k1))
+            self.listWidget_5.addItem(re.sub(r'\(.*\)','',k1))
 
     def list_level5_click(self):
         print('list_level5_click')
@@ -847,7 +847,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listitem_to_key6 = []
         for k1, v1 in self.category[category_maker][self.list_k1][self.list_k2][self.list_k3][self.list_k4][self.list_k5].items():
             self.listitem_to_key6.append(k1)
-            self.listWidget_6.addItem(re.sub('\(\d+\)','',k1))
+            self.listWidget_6.addItem(re.sub(r'\(\d+\)','',k1))
 
     def list_level6_click(self):
         print('list_level6_click')
@@ -862,7 +862,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listitem_to_key7 = []
         for k1, v1 in self.category[category_maker][self.list_k1][self.list_k2][self.list_k3][self.list_k4][self.list_k5][self.list_k6].items():
             self.listitem_to_key7.append(k1)
-            self.listWidget_7.addItem(re.sub('\(\d+\)','',k1))
+            self.listWidget_7.addItem(re.sub(r'\(\d+\)','',k1))
 
     def list_level7_click(self):
         print('list_level7_click')
@@ -877,7 +877,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listitem_to_key8 = []
         for k1, v1 in self.category[category_maker][self.list_k1][self.list_k2][self.list_k3][self.list_k4][self.list_k5][self.list_k6][self.list_k7].items():
             self.listitem_to_key8.append(k1)
-            self.listWidget_8.addItem(re.sub('\(\d+\)','',k1))
+            self.listWidget_8.addItem(re.sub(r'\(\d+\)','',k1))
 
     def list_level8_click(self):
         print('list_level8_click')
@@ -890,7 +890,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         item = self.listWidget_8.currentIndex().row()
         self.list_k8 = self.listitem_to_key8[item]
         for k1, v1 in self.category[category_maker][self.list_k1][self.list_k2][self.list_k3][self.list_k4][self.list_k5][self.list_k6][self.list_k7][self.list_k8].items():
-            self.listWidget_9.addItem(re.sub('\(\d+\)','',k1))
+            self.listWidget_9.addItem(re.sub(r'\(\d+\)','',k1))
 
     def program_exit(self):
         config = configparser.ConfigParser()
@@ -1323,7 +1323,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print("%d%% done" % n)
 
 
-if __name__ == "__main__":
+def main():
     app = QApplication()
     w = MainWindow()
     # monitors = QScreen.virtualSiblings(w.screen())
@@ -1340,3 +1340,6 @@ if __name__ == "__main__":
     # w.setGeometry(monitor.left() + 100,monitor.top() + 100,w.width(),w.height())
     w.show()
     app.exec()
+
+if __name__ == "__main__":
+    main()
